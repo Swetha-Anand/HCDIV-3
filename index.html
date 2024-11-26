@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Studying the Trend in HDB Resale Prices of 2-Bedroom Flats in Tampines</title>
+  <title>Annual Average Resale Prices of 2 bedroom HDBs: Tampines vs Pasir Ris</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Base styling for body */
     body {
       font-family: 'Poppins', sans-serif;
       background-color: #f9f9fb;
@@ -17,14 +16,12 @@
       padding: 20px;
       margin: 0;
     }
-
     h1 {
       font-size: 24px;
       font-weight: 600;
       color: #333;
       margin: 20px 0;
     }
-
     .chart-container {
       width: 90%;
       max-width: 800px;
@@ -33,7 +30,6 @@
       border-radius: 8px;
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
-
     .chart-description {
       margin-top: 16px;
       font-size: 15px;
@@ -45,47 +41,38 @@
   </style>
 </head>
 <body>
-  <h1>Studying the Trend in HDB Resale Prices of 2-Bedroom Flats in Tampines</h1>
+  <h1>Annual Average Resale Prices: Tampines v/s Pasir Ris (2019-2024) </h1>
   <div class="chart-container">
-    <canvas id="priceChart"></canvas>
+    <canvas id="annualPriceComparisonChart"></canvas>
   </div>
   <p class="chart-description">
-    The graph illustrates the historical resale prices of 2-bedroom flats in Tampines from 2017 onward, with an analysis to predict future trends. Based on the regression analysis, the predicted resale price for a 2-bedroom HDB flat in Tampines in 2025 is approximately SGD $342,122. This projection suggests a steady upward trend, reflecting potential growth in resale value in the coming years.
-  </p>
+    This chart highlights the rising resale prices for 2-bedroom flats in Tampines and Pasir Ris. The steady upward trend suggests growing demand, likely driven by new amenities, improved transport, and each neighborhood’s unique appeal.
+</p>
 
   <!-- Include Chart.js library -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const ctx = document.getElementById('priceChart').getContext('2d');
+      const ctx = document.getElementById('annualPriceComparisonChart').getContext('2d');
 
-      // Historical Data for HDB Resale Prices
-      const years = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
-      const prices = [242527, 250000, 260000, 265000, 275000, 280000, 290000, 300000];
+      // Data grouped by year
+      const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+      
+      // Average annual resale values for Tampines and Pasir Ris
+      const avgPricesTampines = [265558.3, 260083.3, 285555.5, 325583.3, 344666.6, 359535.7];
+      const avgPricesPasirRis = [257500, 260802, 303750, 322500, 360500, 407000];
 
-      // Predicted price for 2025
-      const predicted2025 = 342122;
-
-      // Extended data for trendline with prediction
-      const yearsExtended = [...years, 2025];
-      const pricesExtended = [...prices, predicted2025];
-
-      // Create gradient for line fill
-      let gradientFill = ctx.createLinearGradient(0, 0, 0, 400);
-      gradientFill.addColorStop(0, 'rgba(34, 167, 240, 0.3)');
-      gradientFill.addColorStop(1, 'rgba(34, 167, 240, 0)');
-
-      // Configure Chart.js with enhanced styling
-      const priceChart = new Chart(ctx, {
+      // Creating the chart with average annual data for both towns
+      const annualPriceComparisonChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: yearsExtended,
+          labels: years,
           datasets: [
             {
-              label: 'Historical Prices',
-              data: prices,
+              label: 'Tampines',
+              data: avgPricesTampines,
               borderColor: '#22a7f0',
-              backgroundColor: gradientFill,
+              backgroundColor: 'rgba(34, 167, 240, 0.3)',
               pointBackgroundColor: '#22a7f0',
               pointRadius: 4,
               pointHoverRadius: 8,
@@ -94,17 +81,17 @@
               borderWidth: 2,
             },
             {
-              label: 'Trendline (Projection)',
-              data: pricesExtended,
+              label: 'Pasir Ris',
+              data: avgPricesPasirRis,
               borderColor: '#f39c12',
-              borderDash: [8, 4],
-              pointBackgroundColor: '#d35400',
+              backgroundColor: 'rgba(243, 156, 18, 0.3)',
+              pointBackgroundColor: '#f39c12',
               pointRadius: 4,
               pointHoverRadius: 8,
-              fill: false,
               tension: 0.3,
+              fill: true,
               borderWidth: 2,
-            },
+            }
           ],
         },
         options: {
@@ -112,7 +99,7 @@
           plugins: {
             title: {
               display: true,
-              text: 'Predicted Trend in HDB Resale Prices',
+              text: 'Comparison of Average Resale Prices of 2 Bedroom HDBs',
               font: { size: 18, weight: 'bold' },
               color: '#333',
             },
@@ -165,18 +152,6 @@
           animation: {
             duration: 2000,
             easing: 'easeInOutQuad',
-          },
-          elements: {
-            line: {
-              borderWidth: 2,
-              tension: 0.4,
-            },
-            point: {
-              radius: 5,
-              hoverRadius: 8,
-              backgroundColor: '#22a7f0',
-              hoverBackgroundColor: '#f39c12',
-            },
           },
         },
       });
